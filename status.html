@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Uptime Watch - Status Page</title>
+  <script>
+    async function loadStatus() {
+      try {
+        const res = await fetch("status.json");
+        const data = await res.json();
+        const tbody = document.getElementById("status-body");
+        tbody.innerHTML = "";
+
+        data.forEach(site => {
+          const row = document.createElement("tr");
+
+          const name = document.createElement("td");
+          name.textContent = site.name;
+
+          const url = document.createElement("td");
+          url.innerHTML = `<a href="${site.url}" target="_blank" class="text-blue-600 underline">${site.url}</a>`;
+
+          const status = document.createElement("td");
+          status.textContent = site.status;
+          status.className = site.status === "UP" ? "text-green-600 font-bold" : "text-red-600 font-bold";
+
+          const time = document.createElement("td");
+          time.textContent = new Date(site.lastChecked).toLocaleString();
+
+          row.append(name, url, status, time);
+          tbody.appendChild(row);
+        });
+      } catch (err) {
+        console.error("Failed to load status.json", err);
+      }
+    }
+
+    setInterval(loadStatus, 30000); // auto-refresh every 30 sec
+    window.onload = loadStatus;
+  </script>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 text-gray-800">
+  <header class="bg-blue-900 text-white py-6 text-center">
+    <h1 class="text-3xl font-bold">Uptime Watch Status</h1>
+    <p class="text-sm">Live monitoring of your websites</p>
+  </header>
+
+  <main class="container mx-auto px-4 py-8">
+    <table class="min-w-full table-auto bg-white shadow rounded">
+      <thead class="bg-gray-200">
+        <tr>
+          <th class="px-4 py-2 text-left">Name</th>
+          <th class="px-4 py-2 text-left">URL</th>
+          <th class="px-4 py-2 text-left">Status</th>
+          <th class="px-4 py-2 text-left">Last Checked</th>
+        </tr>
+      </thead>
+      <tbody id="status-body"></tbody>
+    </table>
+    <p class="text-sm text-gray-500 mt-4">Auto-refreshes every 30 seconds</p>
+  </main>
+
+  <footer class="bg-blue-900 text-white text-center py-4">
+    &copy; 2025 Ghani Waheed. All rights reserved.
+  </footer>
+</body>
+</html>
