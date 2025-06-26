@@ -5,7 +5,7 @@ require("dotenv").config();
 const { sendAlert } = require("./alerts/telegram");
 
 const sites = JSON.parse(fs.readFileSync("websites.json", "utf-8"));
-const statusFile = "public/status.json"; // Output for frontend
+const statusFile = "status.json"; // Output for frontend
 
 function saveStatus(statuses) {
   const timeNow = new Date().toISOString();
