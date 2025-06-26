@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Google",
+    "url": "https://www.google.com",
+    "status": "UP",
+    "lastChecked": "2025-06-26T13:50:02.868Z"
+  },
+  {
+    "name": "GitHub",
+    "url": "https://www.github.com",
+    "status": "UP",
+    "lastChecked": "2025-06-26T13:50:02.868Z"
+  }
+]
