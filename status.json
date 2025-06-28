@@ -3,18 +3,18 @@
     "name": "Google",
     "url": "https://www.google.com",
     "status": "UP",
-    "lastChecked": "2025-06-28T06:53:36.796Z"
+    "lastChecked": "2025-06-28T06:55:34.356Z"
   },
   {
     "name": "GitHub",
     "url": "https://www.github.com",
     "status": "UP",
-    "lastChecked": "2025-06-28T06:53:36.796Z"
+    "lastChecked": "2025-06-28T06:55:34.356Z"
   },
   {
     "name": "Fake Site",
     "url": "https://fake-uptime-check.com",
     "status": "DOWN",
-    "lastChecked": "2025-06-28T06:53:36.796Z"
+    "lastChecked": "2025-06-28T06:55:34.356Z"
   }
 ]
