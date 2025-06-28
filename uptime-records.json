@@ -1,0 +1,18 @@
+{
+  "https://www.google.com": {
+    "up": 442,
+    "down": 13
+  },
+  "https://www.github.com": {
+    "up": 450,
+    "down": 5
+  },
+  "https://fake-uptime-check.com": {
+    "up": 0,
+    "down": 455
+  },
+  "https://joinherbeauty.com/": {
+    "up": 447,
+    "down": 8
+  }
+}

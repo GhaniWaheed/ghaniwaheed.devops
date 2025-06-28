@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Alert Logs | Uptime Watch</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+  <header class="bg-red-700 text-white py-6 shadow text-center">
+    <h1 class="text-3xl font-bold">📣 Uptime Watch - Alert Logs</h1>
+    <p class="text-sm">All triggered downtime alerts</p>
+  </header>
+
+  <main class="container mx-auto px-4 py-8">
+    <div id="alertLogs" class="grid gap-4"></div>
+    <p id="error" class="text-center text-red-600 hidden mt-4">❌ Could not load alert logs.</p>
+  </main>
+
+  <footer class="bg-gray-800 text-white text-center py-4 mt-8">
+    &copy; 2025 Ghani Waheed. All rights reserved.
+  </footer>
+
+  <script>
+    async function loadAlerts() {
+      try {
+        const res = await fetch('/alert-logs.json');
+        const logs = await res.json();
+        const container = document.getElementById("alertLogs");
+
+        if (logs.length === 0) {
+          container.innerHTML = '<p class="text-center">No alerts found ✅</p>';
+          return;
+        }
+
+        logs.reverse().forEach(log => {
+          const div = document.createElement("div");
+          div.className = "bg-white p-4 rounded shadow border";
+
+          div.innerHTML = `
+            <p><strong>Site:</strong> ${log.site}</p>
+            <p><strong>Status:</strong> <span class="${log.status === 'DOWN' ? 'text-red-600' : 'text-green-600'}">${log.status}</span></p>
+            <p><strong>Message:</strong> ${log.message}</p>
+            <p class="text-sm text-gray-500"><strong>Time:</strong> ${new Date(log.timestamp).toLocaleString()}</p>
+          `;
+
+          container.appendChild(div);
+        });
+
+      } catch (err) {
+        console.error(err);
+        document.getElementById("error").classList.remove("hidden");
+      }
+    }
+
+    loadAlerts();
+  </script>
+</body>
+</html>

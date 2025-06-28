@@ -3,18 +3,28 @@
     "name": "Google",
     "url": "https://www.google.com",
     "status": "UP",
-    "lastChecked": "2025-06-28T08:11:02.928Z"
+    "responseTime": 783,
+    "lastChecked": "2025-06-28T13:08:48.244Z"
   },
   {
     "name": "GitHub",
     "url": "https://www.github.com",
     "status": "UP",
-    "lastChecked": "2025-06-28T08:11:02.928Z"
+    "responseTime": 906,
+    "lastChecked": "2025-06-28T13:08:48.244Z"
   },
   {
     "name": "Fake Site",
     "url": "https://fake-uptime-check.com",
     "status": "DOWN",
-    "lastChecked": "2025-06-28T08:11:02.928Z"
+    "responseTime": null,
+    "lastChecked": "2025-06-28T13:08:48.244Z"
+  },
+  {
+    "name": "JoinHerBeauty",
+    "url": "https://joinherbeauty.com/",
+    "status": "UP",
+    "responseTime": 1500,
+    "lastChecked": "2025-06-28T13:08:48.244Z"
   }
 ]

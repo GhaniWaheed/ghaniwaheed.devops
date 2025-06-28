@@ -2,66 +2,85 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Ghani Waheed | DevOps Engineer</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
 </head>
-<body class="bg-gray-100 text-gray-800">
-  <header class="bg-blue-900 text-white py-6">
-    <div class="container mx-auto text-center">
-      <h1 class="text-3xl font-bold">Ghani Waheed</h1>
-      <p class="text-lg">DevOps Engineer | Creator of Uptime Watch</p>
+<body class="bg-slate-50 text-gray-800 flex flex-col min-h-screen">
+
+  <!-- Hero Section -->
+  <header class="bg-gradient-to-r from-indigo-900 to-indigo-700 text-white py-12 shadow">
+    <div class="container mx-auto text-center" data-aos="fade-down">
+      <h1 class="text-5xl font-extrabold mb-2">Ghani Waheed</h1>
+      <p class="text-xl font-light">DevOps Engineer | Creator of Uptime Watch</p>
+      <div class="mt-6">
+        <a href="status.html" class="bg-white text-indigo-700 font-semibold px-6 py-3 rounded shadow hover:bg-indigo-100 transition duration-200">🔍 View Status Page</a>
+      </div>
     </div>
   </header>
 
-  <main class="container mx-auto px-4 py-10">
+  <main class="flex-grow container mx-auto px-4 py-16">
+    
     <!-- Services -->
-    <section class="mb-12">
-      <h2 class="text-2xl font-bold mb-4">DevOps Services</h2>
-      <ul class="list-disc list-inside space-y-2">
-        <li>CI/CD Setup (GitHub Actions, GitLab, Jenkins)</li>
-        <li>Dockerization & Kubernetes Deployment</li>
-        <li>Monitoring & Alerting (Prometheus, Grafana)</li>
-        <li>Linux Server Hardening & NGINX Setup</li>
-        <li>Cloud Deployments (AWS, GCP, Railway)</li>
-      </ul>
+    <section class="mb-16">
+      <h2 class="text-3xl font-bold text-indigo-800 mb-8" data-aos="fade-up">💼 DevOps Services</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8">
+        <div class="bg-white p-6 rounded-xl shadow hover:shadow-md transition" data-aos="fade-up" data-aos-delay="100">
+          <h3 class="font-semibold text-lg mb-2">CI/CD Pipelines</h3>
+          <p>GitHub Actions, GitLab, Jenkins pipelines for rapid delivery.</p>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow hover:shadow-md transition" data-aos="fade-up" data-aos-delay="200">
+          <h3 class="font-semibold text-lg mb-2">Containerization</h3>
+          <p>Dockerize your apps and deploy with Kubernetes & Helm.</p>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow hover:shadow-md transition" data-aos="fade-up" data-aos-delay="300">
+          <h3 class="font-semibold text-lg mb-2">Monitoring</h3>
+          <p>Uptime Watch, Prometheus, Grafana with custom alerts.</p>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow hover:shadow-md transition" data-aos="fade-up" data-aos-delay="400">
+          <h3 class="font-semibold text-lg mb-2">Linux & Cloud</h3>
+          <p>Secure NGINX, Linux hardening, AWS, Railway, GCP deployments.</p>
+        </div>
+      </div>
     </section>
 
     <!-- Product -->
-<section class="mb-12">
-  <h2 class="text-2xl font-bold mb-4">🛠️ Uptime Watch</h2>
-  <p class="mb-4">Uptime Watch is a self-hosted uptime monitoring and alerting tool built for startups and developers. Get Telegram alerts when your site goes down, and track performance easily.</p>
-  <ul class="list-disc list-inside mb-4">
-    <li>Easy to set up (Node.js + Docker)</li>
-    <li>Telegram Alerts</li>
-    <li>Configurable websites.json</li>
-    <li>Coming soon: Public Status Page</li>
-  </ul>
-  
-  <!-- GitHub Button -->
-  <div class="flex flex-col sm:flex-row gap-4">
-    <a href="https://github.com/GhaniWaheed/ghaniwaheed.devops" class="bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-800 text-center">
-      View on GitHub
-    </a>
-
-    <!-- New Status Page Button -->
-    <a href="status.html" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 text-center">
-      View Status Page
-    </a>
-  </div>
-</section>
-
+    <section class="mb-16" data-aos="zoom-in-up">
+      <h2 class="text-3xl font-bold text-indigo-800 mb-6">🛠️ Uptime Watch</h2>
+      <p class="mb-4 text-slate-600">Uptime Watch is a self-hosted uptime monitoring tool for developers & startups. Telegram alerts, JSON-based config, and shareable public status page.</p>
+      <ul class="list-disc list-inside mb-6 text-slate-700">
+        <li>Node.js backend + PM2 scheduler</li>
+        <li>Static frontend served via NGINX</li>
+        <li>Telegram alert system (or optional custom integration)</li>
+      </ul>
+      <div class="flex gap-4">
+        <a href="status.html" class="bg-green-600 text-white px-5 py-2 rounded hover:bg-green-700 transition">📊 Live Status</a>
+        <a href="https://github.com/GhaniWaheed/ghaniwaheed.devops" class="bg-gray-800 text-white px-5 py-2 rounded hover:bg-gray-900 transition" target="_blank">💻 GitHub Repo</a>
+      </div>
+    </section>
 
     <!-- Contact -->
-    <section class="mb-12">
-      <h2 class="text-2xl font-bold mb-4">📬 Contact</h2>
-      <p>Email: <a href="mailto:ghaniwaheed89@gmail.com" class="text-blue-600">ghaniwaheed89@gmail.com</a></p>
-      <p>WhatsApp: <a href="https://wa.me/923227560234" class="text-blue-600">+92 322 7560234</a></p>
+    <section class="mb-12" data-aos="fade-up">
+      <h2 class="text-3xl font-bold text-indigo-800 mb-6">📬 Contact</h2>
+      <p class="mb-2">📧 <a href="mailto:ghaniwaheed89@gmail.com" class="text-indigo-600 hover:underline">ghaniwaheed89@gmail.com</a></p>
+      <p>📱 <a href="https://wa.me/923227560234" class="text-indigo-600 hover:underline">+92 322 7560234</a></p>
     </section>
   </main>
 
-  <footer class="bg-blue-900 text-white text-center py-4">
+  <footer class="bg-indigo-900 text-white text-center py-5 mt-auto">
     &copy; 2025 Ghani Waheed. All rights reserved.
   </footer>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init();
+  </script>
 </body>
 </html>
