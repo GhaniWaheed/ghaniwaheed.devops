@@ -15,4 +15,5 @@ COPY . .
 EXPOSE 4000
 
 # Run API and uptime checker together
-CMD ["sh", "-c", "node index.js & node server.js"]
+#CMD ["sh", "-c", "node index.js & node server.js"]
+CMD ["node", "server.js"]
