@@ -7,27 +7,56 @@
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
   <style>
     body {
       font-family: 'Inter', sans-serif;
     }
+    .lottie-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      opacity: 0.04;
+      pointer-events: none;
+    }
   </style>
 </head>
-<body class="bg-slate-50 text-gray-800 flex flex-col min-h-screen">
+<body class="bg-slate-50 text-gray-800 flex flex-col min-h-screen relative">
 
-  <!-- Hero Section -->
-  <header class="bg-gradient-to-r from-indigo-900 to-indigo-700 text-white py-12 shadow">
+  <!-- ✅ DevOps Lottie Background -->
+  <div class="lottie-bg">
+    <lottie-player
+      src="https://assets2.lottiefiles.com/packages/lf20_06a6pf9i.json"
+      background="transparent"
+      speed="1"
+      loop
+      autoplay
+      style="width: 100%; height: 100%;"
+    ></lottie-player>
+  </div>
+
+  <!-- 🧑‍💻 Hero Section -->
+  <header class="bg-gradient-to-r from-indigo-900 to-indigo-700 text-white py-12 shadow relative z-10">
     <div class="container mx-auto text-center" data-aos="fade-down">
       <h1 class="text-5xl font-extrabold mb-2">Ghani Waheed</h1>
       <p class="text-xl font-light">DevOps Engineer | Creator of Uptime Watch</p>
-      <div class="mt-6">
-        <a href="status.html" class="bg-white text-indigo-700 font-semibold px-6 py-3 rounded shadow hover:bg-indigo-100 transition duration-200">🔍 View Status Page</a>
+      <div class="mt-6 flex justify-center gap-4 flex-wrap">
+        <a href="status.html" class="bg-white text-indigo-700 font-semibold px-6 py-3 rounded shadow hover:bg-indigo-100 transition duration-200">
+          🔍 View Status Page
+        </a>
+        <a href="Ghani-Waheed-DevOps.pdf" download class="bg-indigo-700 text-white font-semibold px-6 py-3 rounded shadow hover:bg-indigo-800 transition duration-200">
+          📄 Download Resume
+        </a>
       </div>
     </div>
   </header>
 
-  <main class="flex-grow container mx-auto px-4 py-16">
-    
+  <!-- 💼 Main Content -->
+  <main class="flex-grow container mx-auto px-4 py-16 relative z-10">
+
     <!-- Services -->
     <section class="mb-16">
       <h2 class="text-3xl font-bold text-indigo-800 mb-8" data-aos="fade-up">💼 DevOps Services</h2>
@@ -60,7 +89,7 @@
         <li>Static frontend served via NGINX</li>
         <li>Telegram alert system (or optional custom integration)</li>
       </ul>
-      <div class="flex gap-4">
+      <div class="flex gap-4 flex-wrap">
         <a href="status.html" class="bg-green-600 text-white px-5 py-2 rounded hover:bg-green-700 transition">📊 Live Status</a>
         <a href="https://github.com/GhaniWaheed/ghaniwaheed.devops" class="bg-gray-800 text-white px-5 py-2 rounded hover:bg-gray-900 transition" target="_blank">💻 GitHub Repo</a>
       </div>
@@ -74,7 +103,7 @@
     </section>
   </main>
 
-  <footer class="bg-indigo-900 text-white text-center py-5 mt-auto">
+  <footer class="bg-indigo-900 text-white text-center py-5 mt-auto relative z-10">
     &copy; 2025 Ghani Waheed. All rights reserved.
   </footer>
 

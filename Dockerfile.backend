@@ -1,0 +1,18 @@
+# Base image
+FROM node:18
+
+# Working directory
+WORKDIR /app
+
+# Copy package.json and install dependencies
+COPY package*.json ./
+RUN npm install
+
+# Copy source files
+COPY . .
+
+# Expose API port
+EXPOSE 4000
+
+# Run API and uptime checker together
+CMD ["sh", "-c", "node index.js & node server.js"]

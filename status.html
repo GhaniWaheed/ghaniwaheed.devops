@@ -7,187 +7,257 @@
   <link rel="icon" href="/favicon.ico" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-100 text-gray-800">
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
-  <header class="bg-blue-900 text-white py-6 shadow">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+
+    .lottie-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      opacity: 0.06;
+      pointer-events: none;
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .glass-card:hover {
+      transform: scale(1.02);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+<body class="bg-gray-100 text-gray-800 relative">
+
+  <!-- ✅ DevOps Animated Background -->
+  <div class="lottie-bg">
+    <lottie-player
+      src="https://assets2.lottiefiles.com/packages/lf20_06a6pf9i.json"
+      background="transparent"
+      speed="1"
+      loop
+      autoplay
+      style="width: 100%; height: 100%;"
+    ></lottie-player>
+  </div>
+
+  <header class="bg-blue-900 text-white py-6 shadow relative z-10">
     <div class="container mx-auto text-center">
-      <h1 class="text-3xl font-bold">Uptime Watch</h1>
-      <p class="text-lg">Live monitoring of your websites with response time</p>
+      <h1 class="text-4xl font-extrabold tracking-wide">Uptime Watch</h1>
+      <p class="text-lg mt-1">⏱ Real-time monitoring & alerting system for DevOps</p>
     </div>
   </header>
 
-  <main class="container mx-auto px-4 py-10">
-    <section class="mb-6">
+  <main class="container mx-auto px-4 py-10 relative z-10">
+    <!-- 🔍 Search & Filter -->
+    <section class="mb-8">
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <input type="text" id="search" placeholder="Search website..." class="w-full md:w-1/3 px-3 py-2 border rounded shadow">
         <div class="flex items-center space-x-4">
           <label><input type="checkbox" id="onlyUp" class="mr-1"> Only UP</label>
-          <button id="sortPing" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded">Sort by Ping</button>
-          <a href="/api/download-csv" class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded">Download Logs</a>
+          <button id="sortPing" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow">Sort by Ping</button>
+          <a href="/api/download-csv" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded shadow">Download Logs</a>
         </div>
       </div>
     </section>
 
+    <!-- ✅ Status Cards -->
     <section class="mb-10">
-      <h2 class="text-xl font-semibold mb-4">Status Summary</h2>
-      <div id="statusList" class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <h2 class="text-2xl font-semibold mb-4">📊 Status Summary</h2>
+      <div id="statusList" class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         <p>Loading...</p>
       </div>
       <p id="error" class="text-red-600 mt-4 hidden">❌ Failed to load status data.</p>
     </section>
 
+    <!-- 📈 Uptime Pie Chart -->
     <section class="mb-12">
-      <h2 class="text-xl font-semibold mb-4">Current Status Chart</h2>
+      <h2 class="text-2xl font-semibold mb-4">📍 Current Status Chart</h2>
       <canvas id="statusChart" class="max-w-sm mx-auto"></canvas>
     </section>
 
+    <!-- 📆 Trend Chart -->
     <section>
-      <h2 class="text-xl font-semibold mb-4">Uptime Trend (Daily)</h2>
+      <h2 class="text-2xl font-semibold mb-4">📅 Uptime Trend (Daily)</h2>
       <canvas id="trendChart" class="w-full max-w-3xl mx-auto"></canvas>
     </section>
   </main>
 
-  <footer class="bg-blue-900 text-white text-center py-4 mt-12">
-    © 2025 Ghani Waheed. All rights reserved.
+  <!-- ✅ Footer -->
+  <footer class="bg-blue-900 text-white text-center py-4 mt-12 relative z-10">
+    Made with ❤️ by Ghani Waheed | © 2025 All rights reserved.
   </footer>
 
-  <script>
-    let allSites = [];
+<!-- 📜 JavaScript -->
+<script>
+  let allSites = [];
 
-    async function loadStatus() {
-      try {
-        const res = await fetch('/api/status');
-        const data = await res.json();
-        allSites = data;
-        renderStatus();
-        renderChart(data);
-        document.getElementById("error").classList.add("hidden");
-      } catch (e) {
-        document.getElementById("error").classList.remove("hidden");
-        console.error(e);
-      }
-    }
-
-    async function loadTrend() {
-      try {
-        const res = await fetch('/api/uptime-daily');
-        const data = await res.json();
-        renderTrend(data);
-      } catch (e) {
-        console.error("Trend error:", e);
-      }
-    }
-
-    function renderStatus() {
-      const search = document.getElementById("search").value.toLowerCase();
-      const onlyUp = document.getElementById("onlyUp").checked;
-      let filtered = allSites;
-
-      if (search) {
-        filtered = filtered.filter(site => site.name.toLowerCase().includes(search));
-      }
-      if (onlyUp) {
-        filtered = filtered.filter(site => site.status === "UP");
-      }
-
-      const list = document.getElementById("statusList");
-      list.innerHTML = "";
-
-      if (filtered.length === 0) {
-        list.innerHTML = `<p class="col-span-full text-center">No matching results</p>`;
-        return;
-      }
-
-      filtered.forEach(site => {
-        const div = document.createElement("div");
-        div.className = "p-4 bg-white rounded shadow border";
-
-        div.innerHTML = `
-          <h3 class="text-lg font-bold">${site.name}</h3>
-          <p class="text-sm break-all">${site.url}</p>
-          <p>Status: <span class="${site.status === 'UP' ? 'text-green-600' : 'text-red-600'} font-semibold">${site.status}</span></p>
-          <p>Ping: ${site.responseTime !== null ? site.responseTime + ' ms' : 'N/A'}</p>
-          <p class="text-xs text-gray-500">Last Checked: ${new Date(site.lastChecked).toLocaleString()}</p>
-        `;
-        list.appendChild(div);
-      });
-    }
-
-    function renderChart(data) {
-      const ctx = document.getElementById("statusChart").getContext("2d");
-      const upCount = data.filter(d => d.status === "UP").length;
-      const downCount = data.filter(d => d.status === "DOWN").length;
-
-      if (window.statusPie) window.statusPie.destroy();
-
-      window.statusPie = new Chart(ctx, {
-        type: "doughnut",
-        data: {
-          labels: ["UP", "DOWN"],
-          datasets: [{
-            data: [upCount, downCount],
-            backgroundColor: ["#34D399", "#F87171"],
-          }],
-        },
-        options: {
-          responsive: true,
-          animation: false,
-          plugins: {
-            legend: { position: 'bottom' }
-          }
-        }
-      });
-    }
-
-    function renderTrend(dailyData) {
-      const ctx = document.getElementById("trendChart").getContext("2d");
-      const sites = Object.keys(dailyData);
-      const dates = Array.from(new Set(sites.flatMap(name => Object.keys(dailyData[name])))).sort();
-
-      const datasets = sites.map(name => {
-        const data = dates.map(date => {
-          const d = dailyData[name][date];
-          return d ? ((d.up / d.total) * 100).toFixed(2) : null;
-        });
-        return {
-          label: name,
-          data,
-          fill: false,
-          tension: 0.1,
-          borderWidth: 2,
-        };
-      });
-
-      if (window.trendLine) window.trendLine.destroy();
-
-      window.trendLine = new Chart(ctx, {
-        type: "line",
-        data: { labels: dates, datasets },
-        options: {
-          responsive: true,
-          animation: false,
-          scales: {
-            y: { min: 0, max: 100, title: { display: true, text: "Uptime %" } },
-            x: { title: { display: true, text: "Date" } }
-          },
-          plugins: {
-            legend: { position: 'bottom' }
-          }
-        }
-      });
-    }
-
-    document.getElementById("search").addEventListener("input", renderStatus);
-    document.getElementById("onlyUp").addEventListener("change", renderStatus);
-    document.getElementById("sortPing").addEventListener("click", () => {
-      allSites.sort((a, b) => (a.responseTime || Infinity) - (b.responseTime || Infinity));
+  async function loadStatus() {
+    try {
+      const res = await fetch('/api/status');
+      const data = await res.json();
+      allSites = data;
       renderStatus();
+      renderChart(data);
+      document.getElementById("error").classList.add("hidden");
+    } catch (e) {
+      document.getElementById("error").classList.remove("hidden");
+      console.error(e);
+    }
+  }
+
+  async function loadTrend() {
+    try {
+      const res = await fetch('/api/uptime-daily');
+      const data = await res.json();
+      renderTrend(data);
+    } catch (e) {
+      console.error("Trend error:", e);
+    }
+  }
+
+  function renderStatus() {
+    const search = document.getElementById("search").value.toLowerCase();
+    const onlyUp = document.getElementById("onlyUp").checked;
+    let filtered = allSites;
+
+    if (search) {
+      filtered = filtered.filter(site => site.name.toLowerCase().includes(search));
+    }
+    if (onlyUp) {
+      filtered = filtered.filter(site => site.status === "UP");
+    }
+
+    const list = document.getElementById("statusList");
+    list.innerHTML = "";
+
+    if (filtered.length === 0) {
+      list.innerHTML = `<p class="col-span-full text-center">No matching results</p>`;
+      return;
+    }
+
+    filtered.forEach(site => {
+      const div = document.createElement("div");
+      div.className = "glass-card p-4 rounded border";
+
+      div.innerHTML = `
+        <h3 class="text-lg font-bold">${site.name}</h3>
+        <p class="text-sm break-all">${site.url}</p>
+        <p>Status: <span class="${site.status === 'UP' ? 'text-green-600' : 'text-red-600'} font-semibold">${site.status}</span></p>
+        <p>Ping: ${site.responseTime !== null ? site.responseTime + ' ms' : 'N/A'}</p>
+        <p class="text-xs text-gray-500">Last Checked: ${new Date(site.lastChecked).toLocaleString()}</p>
+      `;
+      list.appendChild(div);
+    });
+  }
+
+  function renderChart(data) {
+    const ctx = document.getElementById("statusChart").getContext("2d");
+    const upCount = data.filter(d => d.status === "UP").length;
+    const downCount = data.filter(d => d.status === "DOWN").length;
+
+    if (window.statusPie) window.statusPie.destroy();
+
+    window.statusPie = new Chart(ctx, {
+      type: "doughnut",
+      data: {
+        labels: ["UP", "DOWN"],
+        datasets: [{
+          data: [upCount, downCount],
+          backgroundColor: ["#34D399", "#F87171"],
+        }],
+      },
+      options: {
+        responsive: true,
+        animation: false,
+        plugins: {
+          legend: { position: 'bottom' }
+        }
+      }
+    });
+  }
+
+  // ✅ FIXED BAR CHART FUNCTION
+  function renderTrend(dailyData) {
+    const ctx = document.getElementById("trendChart").getContext("2d");
+    const sites = Object.keys(dailyData);
+    const dates = Array.from(new Set(sites.flatMap(name => Object.keys(dailyData[name])))).sort();
+
+    const colors = [
+      '#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6', '#EC4899'
+    ];
+
+    const datasets = sites.map((name, index) => {
+      const data = dates.map(date => {
+        const d = dailyData[name][date];
+        return d && d.total > 0 ? +(d.up / d.total * 100).toFixed(2) : 0;
+      });
+      return {
+        label: name,
+        data,
+        backgroundColor: colors[index % colors.length],
+        borderColor: colors[index % colors.length],
+        borderWidth: 1
+      };
     });
 
-    loadStatus();
-    loadTrend();
-    setInterval(loadStatus, 3000); // Every 3 seconds
-  </script>
+    if (window.trendLine) window.trendLine.destroy();
+
+    window.trendLine = new Chart(ctx, {
+      type: "bar",
+      data: {
+        labels: dates,
+        datasets: datasets
+      },
+      options: {
+        responsive: true,
+        animation: false,
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 100,
+            title: {
+              display: true,
+              text: "Uptime %"
+            }
+          },
+          x: {
+            title: {
+              display: true,
+              text: "Date"
+            }
+          }
+        },
+        plugins: {
+          legend: {
+            position: "bottom"
+          }
+        }
+      }
+    });
+  }
+
+  document.getElementById("search").addEventListener("input", renderStatus);
+  document.getElementById("onlyUp").addEventListener("change", renderStatus);
+  document.getElementById("sortPing").addEventListener("click", () => {
+    allSites.sort((a, b) => (a.responseTime || Infinity) - (b.responseTime || Infinity));
+    renderStatus();
+  });
+
+  loadStatus();
+  loadTrend();
+  setInterval(loadStatus, 3000);
+</script>
 </body>
 </html>
