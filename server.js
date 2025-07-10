@@ -1,15 +1,22 @@
 const express = require("express");
 const fs = require("fs");
+const { spawn } = require("child_process"); // for running index.js
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-app.use(express.static(__dirname));
+// ✅ Run uptime checker (index.js)
+const checker = spawn("node", ["index.js"], {
+  stdio: "inherit",
+  shell: true,
+});
 
+// CORS setup
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   next();
 });
 
+// API: Get status
 app.get("/api/status", (req, res) => {
   fs.readFile("status.json", "utf8", (err, data) => {
     if (err) return res.status(500).json({ error: "Failed to read status.json" });
@@ -17,6 +24,7 @@ app.get("/api/status", (req, res) => {
   });
 });
 
+// API: Get uptime-daily
 app.get("/api/uptime-daily", (req, res) => {
   fs.readFile("uptime-daily.json", "utf8", (err, data) => {
     if (err) return res.status(500).json({ error: "Failed to read uptime-daily.json" });
@@ -24,6 +32,7 @@ app.get("/api/uptime-daily", (req, res) => {
   });
 });
 
+// API: Download CSV
 app.get("/api/download-csv", (req, res) => {
   fs.readFile("status.json", "utf8", (err, data) => {
     if (err) return res.status(500).send("Failed to read data");
@@ -40,7 +49,7 @@ app.get("/api/download-csv", (req, res) => {
   });
 });
 
+// Start server
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`✅ API is running on port ${PORT}`);
 });
-
