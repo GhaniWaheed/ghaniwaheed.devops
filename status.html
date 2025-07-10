@@ -110,7 +110,7 @@
 
   async function loadStatus() {
     try {
-      const res = await fetch(`${BASE_URL}/api/status`);
+      const res = await fetch(`${API_BASE}/api/status`);
       const data = await res.json();
       allSites = data;
       renderStatus();
@@ -124,7 +124,7 @@
 
   async function loadTrend() {
     try {
-      const res = await fetch(`${BASE_URL}/api/uptime-daily`);
+      const res = await fetch(`${API_BASE}/api/uptime-daily`);
       const data = await res.json();
       renderTrend(data);
     } catch (e) {
