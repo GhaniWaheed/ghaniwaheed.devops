@@ -99,13 +99,18 @@
     Made with ❤️ by Ghani Waheed | © 2025 All rights reserved.
   </footer>
 
-<!-- 📜 JavaScript -->
+<!-- 📜 JavaScript (Environment-Aware) -->
 <script>
+  const isLocalhost = window.location.hostname === "localhost";
+  const API_BASE = isLocalhost
+    ? "http://localhost:4000"
+    : "https://charming-serenity-production.up.railway.app"; // <- Your Railway URL
+
   let allSites = [];
 
   async function loadStatus() {
     try {
-      const res = await fetch('/api/status');
+      const res = await fetch(`${API_BASE}/api/status`);
       const data = await res.json();
       allSites = data;
       renderStatus();
@@ -119,7 +124,7 @@
 
   async function loadTrend() {
     try {
-      const res = await fetch('/api/uptime-daily');
+      const res = await fetch(`${API_BASE}/api/uptime-daily`);
       const data = await res.json();
       renderTrend(data);
     } catch (e) {
@@ -188,7 +193,6 @@
     });
   }
 
-  // ✅ FIXED BAR CHART FUNCTION
   function renderTrend(dailyData) {
     const ctx = document.getElementById("trendChart").getContext("2d");
     const sites = Object.keys(dailyData);
