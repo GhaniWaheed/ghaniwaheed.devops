@@ -110,7 +110,9 @@
 
   async function loadStatus() {
     try {
-      const res = await fetch(`${API_BASE}/api/status`);
+      <!--const res = await fetch(`${API_BASE}/api/status`);-->
+      const res = await fetch('https://ghaniwaheeddevops-production.up.railway.app/api/status');
+      const res = await fetch('https://ghaniwaheeddevops-production.up.railway.app/api/uptime-daily');
       const data = await res.json();
       allSites = data;
       renderStatus();
