@@ -5,6 +5,9 @@ const { spawn } = require("child_process"); // ✅ Sirf ek dafa
 const app = express();
 const PORT = process.env.PORT || 4000;
 
+// ✅ Serve static frontend files like index.html, status.html
+app.use(express.static(__dirname));
+
 // ✅ Run index.js in background
 spawn("node", ["index.js"], {
   stdio: "inherit",
