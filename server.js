@@ -38,6 +38,7 @@ app.get("/api/download-csv", (req, res) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`API is running: http://localhost:${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`✅ API is running on port ${PORT}`);
 });
+
