@@ -11,9 +11,8 @@ RUN npm install
 # Copy source files
 COPY . .
 
-# Expose API port
+# Expose the port (same as in server.js)
 EXPOSE 4000
 
-# Run API and uptime checker together
-#CMD ["sh", "-c", "node index.js & node server.js"]
+# Start only the backend server (no PM2 or background index.js)
 CMD ["node", "server.js"]
