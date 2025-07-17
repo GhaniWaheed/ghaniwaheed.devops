@@ -3,7 +3,7 @@ const fs = require("fs");
 const { spawn } = require("child_process"); // ✅ Sirf ek dafa
 
 const app = express();
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 8080;
 
 // ✅ Serve static frontend files like index.html, status.html
 app.use(express.static(__dirname));

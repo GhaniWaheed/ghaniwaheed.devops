@@ -14,7 +14,7 @@ services:
       context: .
       dockerfile: Dockerfile.backend
     ports:
-      - "4000:4000"
+      - "8080:8080"
     volumes:
       - ./status.json:/app/status.json
       - ./uptime-daily.json:/app/uptime-daily.json
