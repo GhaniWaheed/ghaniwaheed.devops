@@ -12,6 +12,7 @@ COPY alert-logs.json /usr/share/nginx/html/
 COPY uptime-daily.json /usr/share/nginx/html/
 COPY alerts/ /usr/share/nginx/html/alerts/
 COPY Ghani-Waheed-DevOps.pdf /usr/share/nginx/html/
+COPY netflix/ /usr/share/nginx/html/netflix/
 
 # Copy custom nginx config
 COPY nginx/default.conf /etc/nginx/conf.d/default.conf
